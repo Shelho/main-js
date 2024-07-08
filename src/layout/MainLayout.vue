@@ -1,9 +1,7 @@
 <template>
   <the-navbar></the-navbar>
   <div class="container with-nav">
-    <div class="card">
-      <router-view />
-    </div>
+    <router-view />
   </div>
 </template>
 
