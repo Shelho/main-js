@@ -3,10 +3,10 @@
     <h3>online bank</h3>
     <ul class="navbar-menu">
       <li>
-        <router-link to="/">заявки</router-link>
+        <router-link to="/  ">заявки</router-link>
       </li>
       <li>
-        <router-link to="/">помошь</router-link>
+        <router-link to="/help">помошь</router-link>
       </li>
       <li>
         <a href="#">сообщения</a>

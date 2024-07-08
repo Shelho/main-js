@@ -28,9 +28,21 @@
 </template>
 
 <script>
+import { error } from "../utils/error";
 import { useLoginForm } from "@/use/login-from";
+import { useRoute } from "vue-router";
+import { useStore } from "vuex";
 export default {
   setup() {
+    const route = useRoute();
+    const store = useStore();
+
+    if (route.query.message) {
+      store.dispatch("setMessage", {
+        value: error(route.query.message),
+        type: "warning",
+      });
+    }
     return { ...useLoginForm() };
   },
 };
