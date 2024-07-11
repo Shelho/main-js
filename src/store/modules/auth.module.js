@@ -35,6 +35,20 @@ export default {
                 }, { root: true })
             }
 
+        },
+        async load() {
+            try {
+                const myReq = { ...payload, returnSecureToken: true }
+                const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${import.meta.env.VITE_APP_FB_KEY}`
+                const { data } = await axios.post(url, myReq)
+                commit('setToken', data.idToken)
+                commit('clearMessage', null, { rott: true })
+            } catch (e) {
+                dispatch('setMessage', {
+                    value: error(e.response.data.error.message),
+                    type: 'danger'
+                }, { root: true })
+            }
         }
     },
     getters: {
