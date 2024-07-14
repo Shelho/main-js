@@ -27,7 +27,7 @@ export default {
                 const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${import.meta.env.VITE_APP_FB_KEY}`
                 const { data } = await axios.post(url, myReq)
                 commit('setToken', data.idToken)
-                commit('clearMessage', null, { rott: true })
+                commit('clearMessage', null, { root: true })
             } catch (e) {
                 dispatch('setMessage', {
                     value: error(e.response.data.error.message),
@@ -50,6 +50,7 @@ export default {
                 }, { root: true })
             }
         }
+
     },
     getters: {
         token(state) {

@@ -4,7 +4,7 @@
     <template #header>
       <button class="btn primary" @click="modal = true">Создать</button>
     </template>
-
+    <request-filter v-model="filter"></request-filter>
     <request-table :requests="requests"></request-table>
     <teleport to="body">
       <app-model v-if="modal" title="создать заявку" @close="modal = false">
@@ -22,12 +22,14 @@ import RequestTable from "../components/request/RequestTable.vue";
 import AppModel from "../components/ui/AppModel.vue";
 import RequestModal from "../components/request/RequestModal.vue";
 import AppLoader from "../components/ui/AppLoader.vue";
+import RequestFilter from "../components/request/RequestFilter.vue";
 
 export default {
   setup() {
     const store = useStore();
     const loading = ref(false);
     const modal = ref(false);
+    const filter = ref({});
 
     onMounted(async () => {
       loading.value = true;
@@ -35,12 +37,28 @@ export default {
       loading.value = false;
     });
 
-    const requests = computed(() => store.getters["request/requests"]);
-
+    const requests = computed(() =>
+      store.getters["request/requests"]
+        .filter((request) => {
+          if (filter.value.name) {
+            return request.fio.includes(filter.value.name);
+          }
+          return request;
+        })
+        .filter((request) => {
+          if (filter.value.status) {
+            return filter.value.status === request.status;
+          }
+          return {
+            request,
+          };
+        })
+    );
     return {
       modal,
       requests,
       loading,
+      filter,
     };
   },
 
@@ -50,6 +68,7 @@ export default {
     AppModel,
     RequestModal,
     AppLoader,
+    RequestFilter,
   },
 };
 </script>

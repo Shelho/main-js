@@ -19,10 +19,14 @@
         <td>{{ r.fio }}</td>
         <td>{{ r.phone }}</td>
         <td>{{ currency(r.amount) }}</td>
-        <td>{{ r.status }}</td>
+        <td><app-status :type="r.status" /></td>
         <td>
-          <router-link v-slot="{ navigate }" custom :to="'/Request?id=r.id'">
-            <button class="btn primary" @click="navigate">создать</button>
+          <router-link
+            v-slot="{ navigate }"
+            custom
+            :to="{ name: 'Request', params: { id: r.id } }"
+          >
+            <button class="btn" @click="navigate">открыть</button>
           </router-link>
         </td>
       </tr>
@@ -32,11 +36,13 @@
 
 <script>
 import { currency } from "../../utils/currensy";
+import AppStatus from "../ui/AppStatus.vue";
 export default {
   props: ["requests"],
   setup() {
     return { currency };
   },
+  components: { AppStatus },
 };
 </script>
 
